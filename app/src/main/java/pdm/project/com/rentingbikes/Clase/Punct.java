@@ -1,6 +1,8 @@
 package pdm.project.com.rentingbikes.Clase;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by Claudia on 14-Apr-18.
@@ -9,9 +11,14 @@ import android.arch.persistence.room.Entity;
 @Entity(tableName = "Puncte" )
 public class Punct {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="_id")
     private int id;
+    @ColumnInfo(name="Latitudine")
     private double latitudine;
+    @ColumnInfo(name="Longitudine")
     private double longitudine;
+    @ColumnInfo(name="IdTraseu")
     private int idTraseu;
 
     public Punct() {

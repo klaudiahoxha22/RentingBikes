@@ -1,5 +1,7 @@
 package pdm.project.com.rentingbikes.DBConnection;
 
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import java.util.ArrayList;
@@ -11,10 +13,11 @@ import pdm.project.com.rentingbikes.Clase.Punct;
  * Created by Claudia on 14-Apr-18.
  */
 
+@Dao
 public interface PuncteDAO {
 
-    @Query("Select * from puncte where traseu_id = :idTraseu")
-    List<Punct> getAllPuncte(int idTraseu);
+    @Query("Select * from puncte")
+    List<Punct> getAllPuncte();
 
     @Query("Select * from puncte")
     List<Punct> getPuncte();
