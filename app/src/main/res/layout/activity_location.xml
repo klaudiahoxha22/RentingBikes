@@ -8,7 +8,7 @@
     tools:context="pdm.project.com.rentingbikes.LocationActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewLocatii"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 </LinearLayout>
