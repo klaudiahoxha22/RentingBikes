@@ -1,4 +1,4 @@
-package pdm.project.com.rentingbikes;
+package pdm.project.com.rentingbikes.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 
 import pdm.project.com.rentingbikes.Clase.Locatie;
+import pdm.project.com.rentingbikes.ListaLocatiiAdaptor;
+import pdm.project.com.rentingbikes.R;
 
 public class LocationActivity extends AppCompatActivity {
 

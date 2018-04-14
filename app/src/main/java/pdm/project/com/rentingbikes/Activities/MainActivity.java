@@ -1,4 +1,4 @@
-package pdm.project.com.rentingbikes;
+package pdm.project.com.rentingbikes.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import pdm.project.com.rentingbikes.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -85,7 +86,9 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, LocationActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_trasee) {
-
+            ///TODO aici trebuie sa trimitem traseele catre activitatea MapActivity
+            intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
 
         }
