@@ -1,17 +1,30 @@
 package pdm.project.com.rentingbikes.Clase;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by Claudia on 14-Apr-18.
  */
 
+@Entity(tableName = "Locatie")
 public class Locatie  {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="_id")
     private int id;
+    @ColumnInfo(name="Denumire")
     private String denumire;
+    @ColumnInfo(name="Adresa")
     private String adresa;
+    @ColumnInfo(name="Latitudine")
     private double latitudine;
+    @ColumnInfo(name="Longitudine")
     private double longitudine;
+    @ColumnInfo(name="NrBiciclete")
     private int nrBiciclete;
+    @ColumnInfo(name="Pret")
     private double pret;
 
     public Locatie() {}

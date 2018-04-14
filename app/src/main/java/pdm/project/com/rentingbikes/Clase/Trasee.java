@@ -1,5 +1,10 @@
 package pdm.project.com.rentingbikes.Clase;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,12 +13,19 @@ import java.util.Date;
  * Created by Claudia on 14-Apr-18.
  */
 
+@Entity(tableName = "Trasee")
 public class Trasee {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name ="_id")
     private int id;
+    @ColumnInfo(name ="Denumire")
     private String denumire;
+    @ColumnInfo(name ="DataStart")
     private Date dataStart;
+    @ColumnInfo(name ="DataEnd")
     private Date dataEnd;
+    @Ignore
     private ArrayList<Punct> listaPuncte;
 
     public Trasee() {

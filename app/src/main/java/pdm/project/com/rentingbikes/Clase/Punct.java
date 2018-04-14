@@ -1,10 +1,13 @@
 package pdm.project.com.rentingbikes.Clase;
 
+import android.arch.persistence.room.Entity;
+
 /**
  * Created by Claudia on 14-Apr-18.
  */
 
-class Punct {
+@Entity(tableName = "Puncte" )
+public class Punct {
 
     private int id;
     private double latitudine;
