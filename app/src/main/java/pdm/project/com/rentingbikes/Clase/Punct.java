@@ -3,22 +3,26 @@ package pdm.project.com.rentingbikes.Clase;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 
 /**
  * Created by Claudia on 14-Apr-18.
  */
 
-@Entity(tableName = "Puncte" )
-public class Punct {
+@Entity(tableName = "Puncte")
+public class Punct implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="_id")
+    @ColumnInfo(name = "_id")
     private int id;
-    @ColumnInfo(name="Latitudine")
+    @ColumnInfo(name = "Latitudine")
     private double latitudine;
-    @ColumnInfo(name="Longitudine")
+    @ColumnInfo(name = "Longitudine")
     private double longitudine;
-    @ColumnInfo(name="IdTraseu")
+    @ColumnInfo(name = "IdTraseu")
     private int idTraseu;
 
     public Punct() {
@@ -30,6 +34,27 @@ public class Punct {
         this.longitudine = longitudine;
         this.idTraseu = idTraseu;
     }
+
+
+    ///TODO Aici am sters id si idTraseu, pentru ca eu trimit obiectul inainte sa am id si idtrase, daca aveti nelamuriri imi scrieti
+    protected Punct(Parcel in) {
+//        id = in.readInt();
+        latitudine = in.readDouble();
+        longitudine = in.readDouble();
+//        idTraseu = in.readInt();
+    }
+
+    public static final Creator<Punct> CREATOR = new Creator<Punct>() {
+        @Override
+        public Punct createFromParcel(Parcel in) {
+            return new Punct(in);
+        }
+
+        @Override
+        public Punct[] newArray(int size) {
+            return new Punct[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -71,5 +96,16 @@ public class Punct {
                 ", longitudine=" + longitudine +
                 ", idTraseu=" + idTraseu +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeDouble(latitudine);
+        parcel.writeDouble(longitudine);
     }
 }

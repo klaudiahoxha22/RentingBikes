@@ -5,7 +5,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Binder;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
@@ -15,18 +17,22 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.Clase.Traseu;
 
 public class LocalizationService extends Service {
 
     public static final String SERV = "pdm.project.com.rentingbikes.LocalizationService";
+    public static final String FINISH_COURSE = "pdm.project.com.rentingbikes.FINISH_COURSE";
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     //private int permisiuneLocatie = PackageManager.PERMISSION_DENIED;
-
+    List<Punct> listaPuncte;
     private final int INTERVAL = 10000;
     private final int FAST_INTERVAL = 5000;
 
@@ -34,9 +40,19 @@ public class LocalizationService extends Service {
         super();
     }
 
+//    class MyServiceBinder extends Binder {
+//        public LocalizationService getService() {
+//            return LocalizationService.this;
+//        }
+//    }
+//
+//    private IBinder myBinder = new MyServiceBinder();
+
     @Override
     public void onCreate() {
         super.onCreate();
+        listaPuncte = new ArrayList<>();
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationRequest = new LocationRequest();
@@ -48,6 +64,7 @@ public class LocalizationService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         //throw new UnsupportedOperationException("Not yet implemented");
+//        return myBinder;
         return null;
     }
 
@@ -66,10 +83,11 @@ public class LocalizationService extends Service {
                 punct.setLatitudine(location.getLatitude());
                 punct.setLongitudine(location.getLongitude());
                 Log.i("Latitudine", String.valueOf(location.getLatitude()));
-
+                listaPuncte.add(punct);
                 super.onLocationResult(locationResult);
             }
         };
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.i("Serviciu de localizare", "No permission");
@@ -80,11 +98,15 @@ public class LocalizationService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         stopLocationUpdate();
+        super.onDestroy();
     }
 
     private void stopLocationUpdate() {
         mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra("listaPuncte", (ArrayList<? extends Parcelable>) listaPuncte);
+        intent.setAction(FINISH_COURSE);
+        sendBroadcast(intent);
     }
 }

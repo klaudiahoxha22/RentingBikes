@@ -14,9 +14,7 @@ import pdm.project.com.rentingbikes.Clase.Locatie;
 import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.Clase.Traseu;
 
-/**
- * Created by Claudia on 14-Apr-18.
- */
+
 
 @Database(entities = {Locatie.class, Punct.class, Traseu.class}, version = 1)
 @TypeConverters({Converter.class})

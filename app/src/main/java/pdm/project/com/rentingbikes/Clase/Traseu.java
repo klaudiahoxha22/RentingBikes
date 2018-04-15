@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 
 @Entity(tableName = "Traseu")
-public class Traseu {
+public class Traseu implements Serializable{
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name ="_id")

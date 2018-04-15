@@ -24,10 +24,9 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
         recyclerViewLocatii = findViewById(R.id.recyclerViewLocatii);
         recyclerViewLocatii.setLayoutManager(new LinearLayoutManager(this));
-        ///TODO Interogarea baza de date
+
         DataBase database = DataBase.getInstance(this);
         List<Locatie> listaLocatii = database.getLocatiiDao().getAll();
-//        locatii.add(new Locatie("Herastrau", "Sos. Aviatorilor", 10, 10, 100, 5));
 
         ListaLocatiiAdaptor listaLocatiiAdaptor = new ListaLocatiiAdaptor(listaLocatii);
         recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
