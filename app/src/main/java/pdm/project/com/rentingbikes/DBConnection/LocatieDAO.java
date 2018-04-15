@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import pdm.project.com.rentingbikes.Clase.Locatie;
+import pdm.project.com.rentingbikes.Clase.Traseu;
 
 /**
  * Created by Claudia on 14-Apr-18.
@@ -19,6 +20,10 @@ public interface LocatieDAO {
 
     @Query("Select * from Locatie")
     List<Locatie> getAll();
+
+
+    @Insert
+    void insertAll(Locatie... locatii);
 
     @Insert
     void insertLocatie(Locatie locatie);

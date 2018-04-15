@@ -9,15 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pdm.project.com.rentingbikes.Activities.RentActivity;
 import pdm.project.com.rentingbikes.Clase.Locatie;
 
 public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdaptor.ViewHolder> {
 
-    private ArrayList<Locatie> locatii;
+    private List<Locatie> locatii;
 
-    public ListaLocatiiAdaptor(ArrayList<Locatie> locatii) {
+    public ListaLocatiiAdaptor(List<Locatie> locatii) {
         this.locatii = locatii;
     }
 

@@ -9,25 +9,26 @@ import android.arch.persistence.room.PrimaryKey;
  */
 
 @Entity(tableName = "Locatie")
-public class Locatie  {
+public class Locatie {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="_id")
+    @ColumnInfo(name = "_id")
     private int id;
-    @ColumnInfo(name="Denumire")
+    @ColumnInfo(name = "Denumire")
     private String denumire;
-    @ColumnInfo(name="Adresa")
+    @ColumnInfo(name = "Adresa")
     private String adresa;
-    @ColumnInfo(name="Latitudine")
+    @ColumnInfo(name = "Latitudine")
     private double latitudine;
-    @ColumnInfo(name="Longitudine")
+    @ColumnInfo(name = "Longitudine")
     private double longitudine;
-    @ColumnInfo(name="NrBiciclete")
+    @ColumnInfo(name = "NrBiciclete")
     private int nrBiciclete;
-    @ColumnInfo(name="Pret")
+    @ColumnInfo(name = "Pret")
     private double pret;
 
-    public Locatie() {}
+    public Locatie() {
+    }
 
     public Locatie(String denumire, String adresa, double latitudine, double longitudine, int nrBiciclete, double pret) {
         this.denumire = denumire;
@@ -105,4 +106,13 @@ public class Locatie  {
     public void setId(int id) {
         this.id = id;
     }
+
+    public static Locatie[] populateData() {
+        return new Locatie[]
+                {
+                        new Locatie("Herastrau","Soseaua Aviatorilor",123.23,123.21,150,5),
+                        new Locatie("Piata Universitatii","Bd. Regina Elisabeta",44.435782,26.103002,211,30)
+                };
+    }
+
 }

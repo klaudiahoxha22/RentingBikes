@@ -81,6 +81,7 @@ public class LocalizationService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        stopLocationUpdate();
     }
 
     private void stopLocationUpdate() {
