@@ -8,7 +8,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import pdm.project.com.rentingbikes.Clase.Trasee;
+import pdm.project.com.rentingbikes.Clase.Traseu;
 
 /**
  * Created by Claudia on 14-Apr-18.
@@ -17,18 +17,18 @@ import pdm.project.com.rentingbikes.Clase.Trasee;
 @Dao
 public interface TraseeDAO {
 
-    @Query("Select * from trasee")
-    List<Trasee> getAll();
+    @Query("Select * from Traseu")
+    List<Traseu> getAll();
 
     @Insert
-    void insertAll(List<Trasee> trasee);
+    void insertAll(List<Traseu> trasee);
 
     @Insert
-    void insert(Trasee treseu);
+    void insert(Traseu treseu);
 
     @Update
-    void update(Trasee traseu);
+    void update(Traseu traseu);
 
     @Delete
-    void delete(Trasee traseu);
+    void delete(Traseu traseu);
 }

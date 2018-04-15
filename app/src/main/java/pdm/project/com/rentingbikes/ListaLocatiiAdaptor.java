@@ -1,5 +1,6 @@
 package pdm.project.com.rentingbikes;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import pdm.project.com.rentingbikes.Activities.RentActivity;
 import pdm.project.com.rentingbikes.Clase.Locatie;
 
 public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdaptor.ViewHolder> {
@@ -30,7 +32,8 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(view.getContext(), RentActivity.class);
+                view.getContext().startActivity(intent);
             }
         });
         holder.tvDenumireLocatie.setText(locatii.get(position).getDenumire());

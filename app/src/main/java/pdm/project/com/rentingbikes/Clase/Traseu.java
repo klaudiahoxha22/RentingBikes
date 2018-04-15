@@ -13,8 +13,8 @@ import java.util.Date;
  * Created by Claudia on 14-Apr-18.
  */
 
-@Entity(tableName = "Trasee")
-public class Trasee {
+@Entity(tableName = "Traseu")
+public class Traseu {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name ="_id")
@@ -28,10 +28,10 @@ public class Trasee {
     @Ignore
     private ArrayList<Punct> listaPuncte;
 
-    public Trasee() {
+    public Traseu() {
     }
 
-    public Trasee(int id, String denumire, Date dataStart, Date dataEnd, ArrayList<Punct> listaPuncte) {
+    public Traseu(int id, String denumire, Date dataStart, Date dataEnd, ArrayList<Punct> listaPuncte) {
         this.id = id;
         this.denumire = denumire;
         this.dataStart = dataStart;
@@ -81,7 +81,7 @@ public class Trasee {
 
     @Override
     public String toString() {
-        return "Trasee{" +
+        return "Traseu{" +
                 "id=" + id +
                 ", denumire='" + denumire + '\'' +
                 ", dataStart=" + dataStart +

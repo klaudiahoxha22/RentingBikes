@@ -3,19 +3,18 @@ package pdm.project.com.rentingbikes.DBConnection;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import pdm.project.com.rentingbikes.Clase.Locatie;
 import pdm.project.com.rentingbikes.Clase.Punct;
-import pdm.project.com.rentingbikes.Clase.Trasee;
+import pdm.project.com.rentingbikes.Clase.Traseu;
 
 /**
  * Created by Claudia on 14-Apr-18.
  */
 
-@Database(entities = {Locatie.class, Punct.class, Trasee.class}, version = 1)
+@Database(entities = {Locatie.class, Punct.class, Traseu.class}, version = 1)
 @TypeConverters({Converter.class})
 public abstract class DataBase extends RoomDatabase {
 
@@ -30,6 +29,7 @@ public abstract class DataBase extends RoomDatabase {
                     .fallbackToDestructiveMigration()
                     .build();
         }
+
         return instance;
     }
 
