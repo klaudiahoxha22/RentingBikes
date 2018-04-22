@@ -49,7 +49,8 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".Activities.RentActivity"></activity>
+        <activity android:name=".Activities.RentActivity" />
+        <activity android:name=".Activities.TraseeActivity"></activity>
     </application>
 
 </manifest>

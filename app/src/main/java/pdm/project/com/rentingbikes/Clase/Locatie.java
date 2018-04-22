@@ -107,7 +107,7 @@ public class Locatie {
         this.id = id;
     }
 
-    public static Locatie[] populateData() {
+        public static Locatie[] populateData() {
         return new Locatie[]
                 {
                         new Locatie("Herastrau","Soseaua Aviatorilor",123.23,123.21,150,5),

@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_trasee) {
             ///TODO aici trebuie sa trimitem traseele catre activitatea MapActivity
-            intent = new Intent(MainActivity.this, MapActivity.class);
+            intent = new Intent(MainActivity.this, TraseeActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
 

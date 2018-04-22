@@ -10,21 +10,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pdm.project.com.rentingbikes.Activities.MapActivity;
 import pdm.project.com.rentingbikes.Activities.RentActivity;
-import pdm.project.com.rentingbikes.Clase.Locatie;
+import pdm.project.com.rentingbikes.Clase.Traseu;
 
-public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdaptor.ViewHolder> {
+public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.ViewHolder> {
+    List<Traseu> trasee;
 
-    private List<Locatie> locatii;
-
-    public ListaLocatiiAdaptor(List<Locatie> locatii) {
-        this.locatii = locatii;
+    public ListaTraseeAdaptor(List<Traseu> trasee) {
+        this.trasee = trasee;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_locatii_row, parent, false);
-        return new ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_trasee_row, parent, false);
+        return new ListaTraseeAdaptor.ViewHolder(view);
     }
 
     @Override
@@ -32,31 +32,27 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RentActivity.class);
+                Intent intent = new Intent(view.getContext(), MapActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
-        holder.tvDenumireLocatie.setText(locatii.get(position).getDenumire());
-
-        ///TODO Aici trebuie sa luam distanta si sa o punem
-        holder.tvDistantaLocatie.setText("1");
+        holder.tvTraseuDistanta.setText(trasee.get(position).getDenumire());
     }
 
     @Override
     public int getItemCount() {
-        return locatii.size();
+        return trasee.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        TextView tvDistantaLocatie;
-        TextView tvDenumireLocatie;
+        TextView tvTraseuDistanta;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardViewRand);
-            tvDistantaLocatie = itemView.findViewById(R.id.tvDistantaLocatie);
-            tvDenumireLocatie = itemView.findViewById(R.id.tvLocatie);
+            tvTraseuDistanta = itemView.findViewById(R.id.tvTraseuDistanta);
         }
     }
 }
