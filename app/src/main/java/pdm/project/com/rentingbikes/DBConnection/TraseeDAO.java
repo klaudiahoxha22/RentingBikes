@@ -17,14 +17,14 @@ import pdm.project.com.rentingbikes.Clase.Traseu;
 @Dao
 public interface TraseeDAO {
 
-    @Query("Select * from Traseu")
+    @Query("Select * from Trasee")
     List<Traseu> getAll();
 
     @Insert
     void insertAll(List<Traseu> trasee);
 
     @Insert
-    void insert(Traseu treseu);
+    long insert(Traseu treseu);
 
     @Update
     void update(Traseu traseu);

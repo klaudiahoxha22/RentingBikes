@@ -13,6 +13,7 @@ import java.util.List;
 import pdm.project.com.rentingbikes.Activities.MapActivity;
 import pdm.project.com.rentingbikes.Activities.RentActivity;
 import pdm.project.com.rentingbikes.Clase.Traseu;
+import pdm.project.com.rentingbikes.DBConnection.DataBase;
 
 public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.ViewHolder> {
     List<Traseu> trasee;
@@ -28,11 +29,14 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MapActivity.class);
+                Traseu traseu = trasee.get(position);
+                traseu.setListaPuncte(DataBase.getInstance(view.getContext()).getPuncte().getPunctePentruTraseul(traseu.getId()));
+                intent.putExtra("traseu", traseu);
                 view.getContext().startActivity(intent);
             }
         });

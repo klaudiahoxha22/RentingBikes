@@ -2,18 +2,20 @@ package pdm.project.com.rentingbikes.Clase;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
 
-/**
- * Created by Claudia on 14-Apr-18.
- */
+import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "Puncte")
-public class Punct implements Parcelable {
+@Entity(tableName = "Puncte", foreignKeys = @ForeignKey(entity = Traseu.class,
+        parentColumns = "_id",
+        childColumns = "IdTraseu",
+        onDelete = CASCADE))
+public class Punct implements Parcelable, Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")

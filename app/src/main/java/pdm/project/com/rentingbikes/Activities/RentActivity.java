@@ -47,8 +47,12 @@ public class RentActivity extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 listaPuncte = intent.getParcelableArrayListExtra("listaPuncte");
                 DataBase dataBase = DataBase.getInstance(context);
-                traseu.setListaPuncte(listaPuncte);
-                dataBase.getTraseeDao().insert(traseu);
+                long id = dataBase.getTraseeDao().insert(traseu);
+                for (int i = 0; i < listaPuncte.size(); i++) {
+                    Punct punctCurent = listaPuncte.get(i);
+                    punctCurent.setIdTraseu((int) id);
+                    dataBase.getPuncte().insertPunct(punctCurent);
+                }
             }
         };
         IntentFilter intentFilter = new IntentFilter(LocalizationService.FINISH_COURSE);

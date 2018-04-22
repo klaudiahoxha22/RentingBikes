@@ -10,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import pdm.project.com.rentingbikes.Clase.Traseu;
 import pdm.project.com.rentingbikes.R;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -39,7 +40,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        Traseu traseu = (Traseu) getIntent().getExtras().getSerializable("traseu");
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));

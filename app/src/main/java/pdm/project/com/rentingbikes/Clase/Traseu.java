@@ -9,25 +9,24 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Created by Claudia on 14-Apr-18.
- */
 
-@Entity(tableName = "Traseu")
-public class Traseu implements Serializable{
+@Entity(tableName = "Trasee")
+public class Traseu implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name ="_id")
+    @ColumnInfo(name = "_id")
     private int id;
-    @ColumnInfo(name ="Denumire")
+    @ColumnInfo(name = "Denumire")
     private String denumire;
-    @ColumnInfo(name ="DataStart")
+    @ColumnInfo(name = "DataStart")
     private Date dataStart;
-    @ColumnInfo(name ="DataEnd")
+    @ColumnInfo(name = "DataEnd")
     private Date dataEnd;
+
     @Ignore
-    private ArrayList<Punct> listaPuncte;
+    private List<Punct> listaPuncte;
 
     public Traseu() {
     }
@@ -72,11 +71,11 @@ public class Traseu implements Serializable{
         this.dataEnd = dataEnd;
     }
 
-    public ArrayList<Punct> getListaPuncte() {
+    public List<Punct> getListaPuncte() {
         return listaPuncte;
     }
 
-    public void setListaPuncte(ArrayList<Punct> listaPuncte) {
+    public void setListaPuncte(List<Punct> listaPuncte) {
         this.listaPuncte = listaPuncte;
     }
 

@@ -4,10 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-/**
- * Created by Claudia on 14-Apr-18.
- */
-
 @Entity(tableName = "Locatie")
 public class Locatie {
 

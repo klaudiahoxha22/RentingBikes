@@ -9,9 +9,6 @@ import java.util.List;
 
 import pdm.project.com.rentingbikes.Clase.Punct;
 
-/**
- * Created by Claudia on 14-Apr-18.
- */
 
 @Dao
 public interface PuncteDAO {
@@ -19,8 +16,8 @@ public interface PuncteDAO {
     @Query("Select * from puncte")
     List<Punct> getAllPuncte();
 
-    @Query("Select * from puncte")
-    List<Punct> getPuncte();
+    @Query("Select * from puncte WHERE _id=:id")
+    List<Punct> getPunctePentruTraseul(int id);
 
     @Insert
     void insertPunct(Punct punct);

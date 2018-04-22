@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 import pdm.project.com.rentingbikes.Clase.Locatie;
+import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.Clase.Traseu;
 import pdm.project.com.rentingbikes.DBConnection.DataBase;
 import pdm.project.com.rentingbikes.ListaLocatiiAdaptor;
@@ -28,7 +29,6 @@ public class TraseeActivity extends AppCompatActivity {
 
         DataBase database = DataBase.getInstance(this);
         List<Traseu> listaTrasee = database.getTraseeDao().getAll();
-
         ListaTraseeAdaptor listaTraseeAdaptor = new ListaTraseeAdaptor(listaTrasee);
         recyclerViewTrasee.setAdapter(listaTraseeAdaptor);
     }
