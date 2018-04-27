@@ -19,7 +19,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,10 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.GoogleApiClient.*;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -43,18 +39,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import pdm.project.com.rentingbikes.Clase.DeviceLocation;
 import pdm.project.com.rentingbikes.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener /*, OnConnectionFailedListener, ConnectionCallbacks*/ {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final int LOCATION_ENABLED = 2;
     private static final int REQUEST_CHECK_SETTINGS = 3 ;
     public static boolean locationPermissionGranted=true;
     public static Location mLastKnownLocation = null;
-    public GoogleApiClient mGoogleApiClient;
     ConstraintLayout coordinatorLayout;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
