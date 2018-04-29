@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CHECK_SETTINGS = 3 ;
     public static boolean locationPermissionGranted=true;
     public static Location mLastKnownLocation = null;
-    ConstraintLayout coordinatorLayout;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
 
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        coordinatorLayout = findViewById(R.id.content_layout);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
