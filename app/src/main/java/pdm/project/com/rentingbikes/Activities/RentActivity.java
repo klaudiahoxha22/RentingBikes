@@ -34,6 +34,7 @@ public class RentActivity extends AppCompatActivity {
     private ArrayList<Punct> listaPuncte;
     private Traseu traseu;
     BroadcastReceiver broadcastReceiver = null;
+    boolean wasBackPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +98,30 @@ public class RentActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!wasBackPressed) {
+            wasBackPressed = true;
+            Toast.makeText(this, "Daca apasati din nou pe butonul back cursa se va finaliza", Toast.LENGTH_SHORT).show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                        wasBackPressed = false;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onDestroy() {
+        onClickStopCursa(null);
         if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver);
         }
