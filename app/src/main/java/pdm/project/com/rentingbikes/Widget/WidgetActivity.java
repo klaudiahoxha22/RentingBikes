@@ -1,18 +1,24 @@
-package pdm.project.com.rentingbikes;
+package pdm.project.com.rentingbikes.Widget;
 
+import android.app.LoaderManager;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import pdm.project.com.rentingbikes.Activities.RentActivity;
+import pdm.project.com.rentingbikes.R;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class WidgetActivity extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+    static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         //aici trebuie puse cele calculate
@@ -27,7 +33,29 @@ public class WidgetActivity extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+        LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks=
+                new LoaderManager.LoaderCallbacks<Cursor>() {
+                    @Override
+                    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+                        if(i ==2){
+                            return new CursorLoader(context,MyContentProvider.URI_TRASEE,null,null,null,null);
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+                    }
+
+                    @Override
+                    public void onLoaderReset(Loader<Cursor> loader) {
+
+                    }
+                };
     }
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

@@ -53,7 +53,7 @@
         <activity android:name=".Activities.RentActivity" />
         <activity android:name=".Activities.TraseeActivity" />
 
-        <receiver android:name=".WidgetActivity">
+        <receiver android:name=".Widget.WidgetActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

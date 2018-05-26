@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.database.Cursor;
 
 import java.util.Date;
 import java.util.List;
@@ -35,4 +36,7 @@ public interface TraseeDAO {
 
     @Query("UPDATE Trasee set dataEnd =:dataend where _id =:id")
     void updateTraseu(Date dataend, int id);
+
+    @Query("Select * from Trasee where _id=:id order by _id desc limit 1")
+    Cursor getTraseu(int id);
 }
