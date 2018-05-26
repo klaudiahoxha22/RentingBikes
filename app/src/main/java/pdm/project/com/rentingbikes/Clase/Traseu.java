@@ -86,7 +86,7 @@ public class Traseu implements Serializable {
                 ", denumire='" + denumire + '\'' +
                 ", dataStart=" + dataStart +
                 ", dataEnd=" + dataEnd +
-                ", listaPuncte=" + listaPuncte +
+                //", listaPuncte=" + String.valueOf(listaPuncte.get(0).getLatitudine()) +
                 '}';
     }
 }

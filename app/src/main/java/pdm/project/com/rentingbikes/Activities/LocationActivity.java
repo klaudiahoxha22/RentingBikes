@@ -1,6 +1,7 @@
 package pdm.project.com.rentingbikes.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
@@ -44,22 +47,53 @@ public class LocationActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private Location mLastKnownLocation;
     public static GoogleApiClient mGoogleApiClient;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
         recyclerViewLocatii = findViewById(R.id.recyclerViewLocatii);
         recyclerViewLocatii.setLayoutManager(new LinearLayoutManager(this));
-
-        createGoogleApiClient();
+        progress=new ProgressDialog(this);
+        progress.setMessage("Your data is comming");
 
         DataBase database = DataBase.getInstance(this);
         listaLocatii = database.getLocatiiDao().getAll();
+        listaLocatiiAdaptor = new ListaLocatiiAdaptor(listaLocatii, this);
+        recyclerViewLocatii.setAdapter(null);
 
-        listaLocatiiAdaptor = new ListaLocatiiAdaptor(listaLocatii, this, this);
-        recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
+        createGoogleApiClient();
+        if(MainActivity.mLastKnownLocation==null){
+            recyclerViewLocatii.setAdapter(null);
+        }else {
+            recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
+        }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(MainActivity.mLastKnownLocation==null){
+            progress.show();
+        }else{
+            progress.dismiss();
+            recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(MainActivity.mLastKnownLocation !=null){
+            progress.dismiss();
+            recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
+        }else{
+            Toast.makeText(this, "Could not fetch data.Try again.", Toast.LENGTH_LONG).show();
+            progress.dismiss();
+            finish();
+        }
     }
 
     private void createGoogleApiClient() {
@@ -162,7 +196,7 @@ public class LocationActivity extends AppCompatActivity {
 
         //TODO de vazut daca merge cu onNotifyDataSetChange
         Collections.sort(listaLocatii, comparator);
-        listaLocatiiAdaptor = new ListaLocatiiAdaptor(listaLocatii, this, this);
+        listaLocatiiAdaptor = new ListaLocatiiAdaptor(listaLocatii, this);
         recyclerViewLocatii.setAdapter(listaLocatiiAdaptor);
     }
 

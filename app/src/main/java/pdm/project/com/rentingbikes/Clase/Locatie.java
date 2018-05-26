@@ -106,7 +106,7 @@ public class Locatie {
         public static Locatie[] populateData() {
         return new Locatie[]
                 {
-                        new Locatie("Herastrau","Soseaua Aviatorilor",123.23,123.21,150,5),
+                        new Locatie("Herastrau","Soseaua Aviatorilor",44.4702053,26.080564,150,5),
                         new Locatie("Piata Universitatii","Bd. Regina Elisabeta",44.435782,26.103002,211,30)
                 };
     }

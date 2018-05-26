@@ -7,11 +7,8 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-import pdm.project.com.rentingbikes.Clase.Locatie;
-import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.Clase.Traseu;
 import pdm.project.com.rentingbikes.DBConnection.DataBase;
-import pdm.project.com.rentingbikes.ListaLocatiiAdaptor;
 import pdm.project.com.rentingbikes.ListaTraseeAdaptor;
 import pdm.project.com.rentingbikes.R;
 

@@ -40,7 +40,7 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
                 view.getContext().startActivity(intent);
             }
         });
-        holder.tvTraseuDistanta.setText(trasee.get(position).getDenumire());
+        holder.tvTraseuDistanta.setText(trasee.get(position).toString());
     }
 
     @Override
