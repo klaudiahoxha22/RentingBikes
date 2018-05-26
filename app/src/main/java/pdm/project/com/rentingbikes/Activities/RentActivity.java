@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class RentActivity extends AppCompatActivity {
     private Traseu traseu;
     BroadcastReceiver broadcastReceiver = null;
     boolean wasBackPressed = false;
+
+    static Date startTime, endTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class RentActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, COD_PERMISIUNE);
         } else {
             StartServiciuLocalizare();
+            startTime = Calendar.getInstance().getTime();
         }
     }
 
@@ -93,9 +97,19 @@ public class RentActivity extends AppCompatActivity {
     }
 
     public void onClickStopCursa(View view) {
+        endTime = Calendar.getInstance().getTime();
         stopService(serviceLocalization);
         Toast.makeText(this, "Cursa s-a finalizat", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    public static double calculareTimp(){
+        if (startTime==null || endTime==null){
+            return -1;
+        }
+        double timpInMinute = (endTime.getTime()-startTime.getTime())/60000;
+
+        return timpInMinute;
     }
 
     @Override

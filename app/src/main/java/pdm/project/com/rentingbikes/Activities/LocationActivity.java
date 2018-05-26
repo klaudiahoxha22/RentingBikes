@@ -182,4 +182,5 @@ public class LocationActivity extends AppCompatActivity {
         dist = radius * c;
         return dist;
     }
+
 }

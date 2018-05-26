@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#09C"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/distantaParcursa2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="34dp"
+        android:background="#09C"
+        android:contentDescription="@string/distantaParcursa"
+        android:text="@string/distantaParcursa"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/distantaParcursa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/distantaParcursa2"
+        android:layout_marginStart="70dp"
+        android:background="#09C"
+        android:contentDescription="@string/distantaParcursa"
+        android:text="@string/distantaParcursa"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/calorii2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/distantaParcursa2"
+        android:layout_below="@+id/distantaParcursa"
+        android:background="#09C"
+        android:contentDescription="@string/calorii"
+        android:text="@string/calorii"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/calorii"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calorii2"
+        android:layout_centerHorizontal="true"
+        android:background="#09C"
+        android:contentDescription="@string/calorii"
+        android:text="@string/calorii"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/timp2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/calorii"
+        android:layout_marginStart="106dp"
+        android:background="#09C"
+        android:contentDescription="@string/timp"
+        android:text="@string/timp"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/timp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/calorii"
+        android:layout_marginEnd="144dp"
+        android:background="#09C"
+        android:contentDescription="@string/timp"
+        android:text="@string/timp"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+</RelativeLayout>
