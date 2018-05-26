@@ -20,22 +20,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class DeviceLocation {
 
-    public static boolean isLocationEnabled(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        boolean locationEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        return locationEnabled;
-    }
-
-    public static void enableGPS(View view, final Context context) {
-        Snackbar.make(view, "GPS disabled!", Snackbar.LENGTH_LONG)
-                .setAction("Enable", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        context.startActivity(myIntent);
-                    }
-                }).show();
-    }
 
     public static double fromLatLngToKm(double lat1, double lng1, double lat2, double lng2) {
         double dist;

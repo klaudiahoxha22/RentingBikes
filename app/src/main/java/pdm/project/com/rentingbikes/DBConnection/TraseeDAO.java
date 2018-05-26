@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 import pdm.project.com.rentingbikes.Clase.Traseu;
@@ -31,4 +32,7 @@ public interface TraseeDAO {
 
     @Delete
     void delete(Traseu traseu);
+
+    @Query("UPDATE Trasee set dataEnd =:dataend where _id =:id")
+    void updateTraseu(Date dataend, int id);
 }

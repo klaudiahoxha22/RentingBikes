@@ -1,10 +1,12 @@
 package pdm.project.com.rentingbikes;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -30,15 +34,11 @@ import pdm.project.com.rentingbikes.Clase.Locatie;
 public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdaptor.ViewHolder> {
 
     private List<Locatie> locatii;
-    private Context context;
-    private GoogleApiClient mGoogleApiClient;
     LocationActivity locationActivity;
     private double distance;
-    Location mLocation;
 
-    public ListaLocatiiAdaptor(List<Locatie> locatii, Context ctx, LocationActivity loc) {
+    public ListaLocatiiAdaptor(List<Locatie> locatii, LocationActivity loc) {
         this.locatii = locatii;
-        this.context = ctx;
         locationActivity = loc;
     }
 
@@ -48,8 +48,9 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         return new ViewHolder(view);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,14 +61,21 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         holder.tvDenumireLocatie.setText(locatii.get(position).getDenumire());
         holder.tvAdresa.setText(locatii.get(position).getAdresa());
 
-//        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//          Toast.makeText(context, "GPS is required", Toast.LENGTH_SHORT).show();
-//        }
-//        mLocation = LocationServices.FusedLocationApi
-//                .getLastLocation(LocationActivity.mGoogleApiClient);
-        //locationActivity.getDeviceLocation();
+       /* if(MainActivity.mLastKnownLocation==null){
+            MainActivity.mFusedLocationClient.getLastLocation()
+                    .addOnCompleteListener(new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            MainActivity.mLastKnownLocation = task.getResult();
+                            distance = DeviceLocation.fromLatLngToKm(MainActivity.mLastKnownLocation.getLatitude(), MainActivity.mLastKnownLocation.getLongitude(),
 
+                                    locatii.get(position).getLatitudine(), locatii.get(position).getLongitudine());
+                            holder.tvDistantaLocatie.setText(String.valueOf((int)distance)+ " km");
+                        }
+                    });
+        }*/
         distance = DeviceLocation.fromLatLngToKm(MainActivity.mLastKnownLocation.getLatitude(), MainActivity.mLastKnownLocation.getLongitude(),
+
                 locatii.get(position).getLatitudine(), locatii.get(position).getLongitudine());
         holder.tvDistantaLocatie.setText(String.valueOf((int)distance)+ " km");
     }
@@ -91,7 +99,7 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
             tvDistantaLocatie = itemView.findViewById(R.id.tvDistantaLocatie);
             tvDenumireLocatie = itemView.findViewById(R.id.tvLocatie);
             tvAdresa = itemView.findViewById(R.id.tvAdresa);
-            distImg = itemView.findViewById(R.id.distImg);
+            //distImg = itemView.findViewById(R.id.distImg);
         }
     }
 }
