@@ -5,7 +5,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
@@ -20,8 +19,8 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.List;
 
+import pdm.project.com.rentingbikes.Activities.MainActivity;
 import pdm.project.com.rentingbikes.Clase.Punct;
-import pdm.project.com.rentingbikes.Clase.Traseu;
 
 public class LocalizationService extends Service {
 
@@ -40,14 +39,6 @@ public class LocalizationService extends Service {
         super();
     }
 
-//    class MyServiceBinder extends Binder {
-//        public LocalizationService getService() {
-//            return LocalizationService.this;
-//        }
-//    }
-//
-//    private IBinder myBinder = new MyServiceBinder();
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -63,8 +54,6 @@ public class LocalizationService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        //throw new UnsupportedOperationException("Not yet implemented");
-//        return myBinder;
         return null;
     }
 
@@ -82,8 +71,12 @@ public class LocalizationService extends Service {
                 Punct punct = new Punct();
                 punct.setLatitudine(location.getLatitude());
                 punct.setLongitudine(location.getLongitude());
-                Log.i("Latitudine", String.valueOf(location.getLatitude()));
+                Log.i("Serviciu", String.valueOf(location.getLatitude()));
                 listaPuncte.add(punct);
+                Intent intent = new Intent();
+                intent.putExtra("listaPuncte",  punct);
+                intent.setAction(FINISH_COURSE);
+                sendBroadcast(intent);
                 super.onLocationResult(locationResult);
             }
         };
@@ -104,9 +97,10 @@ public class LocalizationService extends Service {
 
     private void stopLocationUpdate() {
         mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
-        Intent intent = new Intent();
+        /*Intent intent = new Intent();
         intent.putParcelableArrayListExtra("listaPuncte", (ArrayList<? extends Parcelable>) listaPuncte);
         intent.setAction(FINISH_COURSE);
-        sendBroadcast(intent);
+        sendBroadcast(intent);*/
     }
+
 }

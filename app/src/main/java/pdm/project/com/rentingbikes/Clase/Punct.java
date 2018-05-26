@@ -15,7 +15,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         parentColumns = "_id",
         childColumns = "IdTraseu",
         onDelete = CASCADE))
-public class Punct implements Parcelable, Serializable {
+public class Punct implements /*Parcelable,*/ Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
@@ -46,7 +46,7 @@ public class Punct implements Parcelable, Serializable {
 //        idTraseu = in.readInt();
     }
 
-    public static final Creator<Punct> CREATOR = new Creator<Punct>() {
+    /*public static final Creator<Punct> CREATOR = new Creator<Punct>() {
         @Override
         public Punct createFromParcel(Parcel in) {
             return new Punct(in);
@@ -56,7 +56,7 @@ public class Punct implements Parcelable, Serializable {
         public Punct[] newArray(int size) {
             return new Punct[size];
         }
-    };
+    };*/
 
     public int getId() {
         return id;
@@ -100,7 +100,7 @@ public class Punct implements Parcelable, Serializable {
                 '}';
     }
 
-    @Override
+   /* @Override
     public int describeContents() {
         return 0;
     }
@@ -109,5 +109,5 @@ public class Punct implements Parcelable, Serializable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeDouble(latitudine);
         parcel.writeDouble(longitudine);
-    }
+    }*/
 }

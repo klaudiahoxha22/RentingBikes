@@ -1,6 +1,7 @@
 package pdm.project.com.rentingbikes.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -24,32 +25,36 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import pdm.project.com.rentingbikes.LocalizationService;
 import pdm.project.com.rentingbikes.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final int REQUEST_CHECK_SETTINGS = 3 ;
-    public static boolean locationPermissionGranted=true;
-    public static Location mLastKnownLocation = null;
-    private FusedLocationProviderClient mFusedLocationClient;
+    private static final int REQUEST_CHECK_SETTINGS = 3;
+    public static boolean locationPermissionGranted = true;
+    public static Location mLastKnownLocation;
     private LocationRequest mLocationRequest;
+    LocationCallback locationCallback;
+    FusedLocationProviderClient mFusedLocationClient;
+    Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +62,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,15 +75,24 @@ public class MainActivity extends AppCompatActivity
         //requesting for ACCESS_FINE_LOCATION
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         createLocationRequest();
+
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequest);
+
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            locationPermissionGranted=false;
+        }
 
         SettingsClient client = LocationServices.getSettingsClient(this);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                getDeviceLocation();
+                getCurrrentLocation();
             }
         });
 
@@ -105,7 +109,8 @@ public class MainActivity extends AppCompatActivity
                         resolvable.startResolutionForResult(MainActivity.this,
                                 REQUEST_CHECK_SETTINGS);
                     } catch (IntentSender.SendIntentException sendEx) {
-                        // Ignore the error.
+                        Log.i("GPS dialog", "Not displayed");
+
                     }
                 }
             }
@@ -119,7 +124,28 @@ public class MainActivity extends AppCompatActivity
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
-    public void getDeviceLocation() {
+    public void getCurrrentLocation() {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                mLastKnownLocation = locationResult.getLastLocation();
+                Log.i("Main Activity", String.valueOf(mLastKnownLocation.getLatitude()));
+            }
+        };
+
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, locationCallback, null);
+    }
+
+
+
+    /*public void getDeviceLocation() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,
@@ -134,20 +160,35 @@ public class MainActivity extends AppCompatActivity
                         public void onSuccess(Location location) {
                             if (location != null) {
                                 mLastKnownLocation = location;
-                                Log.i("MainActivity", String.valueOf(mLastKnownLocation.getLatitude()));
+                                //Log.i("MainActivity- OnSuccess", String.valueOf(mLastKnownLocation.getLatitude()));
                             }
                         }
-                    });
+                    })
+            .addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    if(task.getResult() != null)
+                        mLastKnownLocation = task.getResult();
+                    //Log.i("MainActivity-OnComplete", String.valueOf(task.getResult().getLatitude()));
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i("MainActivity-OnFaulure", e.getMessage());
+                }
+            });
+
         }
 
     }
-
+*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             if(resultCode == RESULT_OK) {
-                getDeviceLocation();
+                getCurrrentLocation();
             }
         }
     }
@@ -160,7 +201,7 @@ public class MainActivity extends AppCompatActivity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "Location permission enabled!", Toast.LENGTH_SHORT).show();
                     locationPermissionGranted = true;
-                    getDeviceLocation();
+                    getCurrrentLocation();
                 }
             }
         }
@@ -215,5 +256,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }
