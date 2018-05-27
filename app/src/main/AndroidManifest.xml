@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,7 +51,17 @@
             android:exported="false" />
 
         <activity android:name=".Activities.RentActivity" />
-        <activity android:name=".Activities.TraseeActivity"></activity>
+        <activity android:name=".Activities.TraseeActivity" />
+
+        <receiver android:name=".Widget.WidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_activity_info" />
+        </receiver>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         onDelete = CASCADE))
 public class Punct implements /*Parcelable,*/ Serializable {
 
+    public static final String TABLE_NAME ="Puncte" ;
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     private int id;
