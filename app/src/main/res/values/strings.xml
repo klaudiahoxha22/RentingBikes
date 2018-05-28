@@ -11,5 +11,7 @@
     <string name="distantaParcursa">Distanta Parcursa</string>
     <string name="calorii">Calorii</string>
     <string name="timp">Timp</string>
+    <string name="refresh">Refresh</string>
+    <string name="InchiriereBiciclete">Pe traseul dumneavoastra: </string>
 
 </resources>

@@ -1,14 +1,19 @@
 package pdm.project.com.rentingbikes.Widget;
 
 import android.app.LoaderManager;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.RemoteViews;
+
+import java.text.DecimalFormat;
 
 import pdm.project.com.rentingbikes.Activities.RentActivity;
 import pdm.project.com.rentingbikes.R;
@@ -18,23 +23,32 @@ import pdm.project.com.rentingbikes.R;
  */
 public class WidgetActivity extends AppWidgetProvider {
 
-    static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager,
+    public static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-
-        //aici trebuie puse cele calculate
-        CharSequence distance = context.getString(R.string.distantaParcursa);
-        CharSequence calories = context.getString(R.string.calorii);
-        CharSequence timp = Double.toString(RentActivity.calculareTimp());
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_activity);
-        views.setTextViewText(R.id.distantaParcursa, distance);
-        views.setTextViewText(R.id.calorii, calories);
-        views.setTextViewText(R.id.timp, timp);
+        if(RentActivity.distanta==-1||RentActivity.calculareCalorii()==-1){
+
+            views.setTextViewText(R.id.distantaParcursa,"0 km");
+            views.setTextViewText(R.id.calorii, "0 kcal");
+            views.setTextViewText(R.id.timp,  " 0 sec");
+
+        }
+        else {
+            //aici trebuie puse cele calculate
+            DecimalFormat df = new DecimalFormat("#.00");
+            CharSequence distance = df.format(RentActivity.distanta);
+            CharSequence calories = df.format(RentActivity.calculareCalorii());
+            CharSequence timp = df.format(RentActivity.calculareTimp());
+            // Construct the RemoteViews object
+            views.setTextViewText(R.id.distantaParcursa, distance + " km");
+            views.setTextViewText(R.id.calorii, calories + " kcal");
+            views.setTextViewText(R.id.timp, timp + " sec");
+        }
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
-        LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks=
+        /*LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks=
                 new LoaderManager.LoaderCallbacks<Cursor>() {
                     @Override
                     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -53,8 +67,9 @@ public class WidgetActivity extends AppWidgetProvider {
                     public void onLoaderReset(Loader<Cursor> loader) {
 
                     }
-                };
+                };*/
     }
+
 
 
     @Override
