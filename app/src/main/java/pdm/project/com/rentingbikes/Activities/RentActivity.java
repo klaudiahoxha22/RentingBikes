@@ -33,11 +33,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import pdm.project.com.rentingbikes.Clase.DeviceLocation;
 import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.Clase.Traseu;
 import pdm.project.com.rentingbikes.DBConnection.DataBase;
 import pdm.project.com.rentingbikes.LocalizationService;
 import pdm.project.com.rentingbikes.R;
+import pdm.project.com.rentingbikes.Widget.WidgetActivity;
 
 public class RentActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -60,6 +62,8 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean wasBackPressed = false;
 
     static Date startTime, endTime;
+
+    public static double distanta = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,9 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Log.i("Rent activity-lat", String.valueOf(punct.getLatitudine()));
                 Log.i("Rent activity-id", String.valueOf(punct.getIdTraseu()));
 
+
                 dataBase.getPuncte().insertPunct(punct);
+
             }
         };
         IntentFilter intentFilter = new IntentFilter(LocalizationService.FINISH_COURSE);
@@ -130,6 +136,12 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
         Toast.makeText(this, "Cursa s-a finalizat", Toast.LENGTH_SHORT).show();
         traseu.setDataEnd(new Date());
         traseu.setListaPuncte(listaPuncte);
+        //calc distanta
+
+            for(int i=1;i<listaPuncte.size();i++){
+                distanta+=DeviceLocation.fromLatLngToKm(listaPuncte.get(i).getLatitudine(), listaPuncte.get(i).getLongitudine(),
+                        listaPuncte.get(i-1).getLatitudine(), listaPuncte.get(i-1).getLongitudine());
+            }
         dataBase.getTraseeDao().updateTraseu(traseu.getDataEnd(), id);
         finish();
     }
@@ -147,15 +159,21 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
-
     public static double calculareTimp(){
         if (startTime==null || endTime==null){
             return -1;
         }
-        double timpInMinute = (endTime.getTime()-startTime.getTime())/60000;
+        double timpInMinute = (endTime.getTime()-startTime.getTime())*0.001;
 
         return timpInMinute;
+    }
+
+    public static double calculareCalorii(){
+        if (startTime==null || endTime==null){
+            return -1;
+        }
+        double calorii=250*distanta/1.7;
+        return calorii;
     }
 
     @Override
