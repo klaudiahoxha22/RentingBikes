@@ -48,12 +48,15 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
                 view.getContext().startActivity(intent);
             }
         });
-        holder.tvTraseuDistanta.setText(trasee.get(position).getDenumire());
-        String originalDate = String.valueOf(trasee.get(position).getDataStart());
-        String date = originalDate.substring(3,11);
-        String an = originalDate.substring(originalDate.length()-4, originalDate.length());
-        holder.tvDataStart.setText(date + an);
+        if (holder.tvTraseuDistanta != null) {
+            holder.tvTraseuDistanta.setText(trasee.get(position).getDenumire());
+            String originalDate = String.valueOf(trasee.get(position).getDataStart());
+            String date = originalDate.substring(3, 11);
+            String an = originalDate.substring(originalDate.length() - 4, originalDate.length());
+            holder.tvDataStart.setText(date + an);
+        }
     }
+
 
     @Override
     public int getItemCount() {
