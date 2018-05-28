@@ -15,6 +15,7 @@ import java.util.List;
 @Entity(tableName = "Trasee")
 public class Traseu implements Serializable {
 
+    public static final String TABLE_NAME = "Trasee";
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     private int id;

@@ -69,7 +69,7 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardViewRand);
-            tvTraseuDistanta = itemView.findViewById(R.id.tvTraseuDistanta);
+            tvTraseuDistanta = itemView.findViewById(R.id.tvDistantaLocatie);
             tvDataStart = itemView.findViewById(R.id.tvTraseuStart);
         }
     }
