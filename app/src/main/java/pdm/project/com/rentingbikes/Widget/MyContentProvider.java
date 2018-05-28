@@ -44,7 +44,7 @@ public class MyContentProvider extends ContentProvider {
             TraseeDAO traseeDao = DataBase.getInstance((context)).getTraseeDao();
             Cursor cursor = null;
             if(code==2){
-                cursor=traseeDao.getTraseu((int) ContentUris.parseId(uri));
+//                cursor=traseeDao.getLastTraseu((int) ContentUris.parseId(uri));
 //                cursor.
             }
             cursor.setNotificationUri(context.getContentResolver(),uri);

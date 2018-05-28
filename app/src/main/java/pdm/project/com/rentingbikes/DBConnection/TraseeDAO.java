@@ -37,6 +37,6 @@ public interface TraseeDAO {
     @Query("UPDATE Trasee set dataEnd =:dataend where _id =:id")
     void updateTraseu(Date dataend, int id);
 
-    @Query("Select * from Trasee where _id=:id order by _id desc limit 1")
-    Cursor getTraseu(int id);
+    @Query("Select * from Trasee order by _id desc limit 1")
+    Cursor getLastTraseu();
 }
