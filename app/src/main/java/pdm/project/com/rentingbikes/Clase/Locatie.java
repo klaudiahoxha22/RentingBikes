@@ -112,5 +112,4 @@ public class Locatie {
                         new Locatie("Tineretului","Bd. Sincai",44.4135527,26.1049582,211,30)
                 };
     }
-
 }
