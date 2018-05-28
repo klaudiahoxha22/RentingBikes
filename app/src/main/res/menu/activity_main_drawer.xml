@@ -15,9 +15,9 @@
             android:title="Traseele mele" />
 
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Setari" />
+            android:id="@+id/nav_despre"
+            android:icon="@drawable/ic_map_black_24dp"
+            android:title="Despre" />
     </group>
 
 </menu>

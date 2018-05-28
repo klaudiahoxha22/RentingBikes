@@ -223,8 +223,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_trasee) {
             intent = new Intent(MainActivity.this, TraseeActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-
+        } else if (id == R.id.nav_despre) {
+            intent = new Intent(MainActivity.this, DespreActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

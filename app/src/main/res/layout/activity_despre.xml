@@ -4,10 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
     tools:context="pdm.project.com.rentingbikes.Activities.DespreActivity">
-<TextView
-    android:text="Proiect PDM"
-    android:textSize="20sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Proiect PDM"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="RentingBIkes"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Grupa 1082"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Echipa:"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Anghel Valentin-"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Balan Simona"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Hoxha Klaudia"
+        android:textSize="20sp" />
 </LinearLayout>
