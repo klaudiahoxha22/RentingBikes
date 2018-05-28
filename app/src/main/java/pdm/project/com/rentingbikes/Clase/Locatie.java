@@ -107,7 +107,9 @@ public class Locatie {
         return new Locatie[]
                 {
                         new Locatie("Herastrau","Soseaua Aviatorilor",44.4702053,26.080564,150,5),
-                        new Locatie("Piata Universitatii","Bd. Regina Elisabeta",44.435782,26.103002,211,30)
+                        new Locatie("Piata Universitatii","Bd. Regina Elisabeta",44.435782,26.103002,211,30),
+                        new Locatie("Piata Romana","Bd. Magheru",44.4469735,26.0951414,211,30),
+                        new Locatie("Tineretului","Bd. Sincai",44.4135527,26.1049582,211,30)
                 };
     }
 
