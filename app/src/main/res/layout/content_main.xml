@@ -10,10 +10,14 @@
     tools:context="pdm.project.com.rentingbikes.Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <fragment
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map_fragment_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"/>
 
 </LinearLayout>

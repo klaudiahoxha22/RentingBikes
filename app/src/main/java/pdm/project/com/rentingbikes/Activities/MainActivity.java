@@ -1,22 +1,14 @@
 package pdm.project.com.rentingbikes.Activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,30 +28,44 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import pdm.project.com.rentingbikes.LocalizationService;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import pdm.project.com.rentingbikes.Clase.Locatie;
+import pdm.project.com.rentingbikes.DBConnection.DataBase;
 import pdm.project.com.rentingbikes.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 3;
     public static boolean locationPermissionGranted = true;
+
     public static Location mLastKnownLocation;
     private LocationRequest mLocationRequest;
     LocationCallback locationCallback;
-    FusedLocationProviderClient mFusedLocationClient;
-    Intent serviceIntent;
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    SupportMapFragment mapFragment;
+    GoogleMap googleMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,6 +77,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment_main);
+        mapFragment.getMapAsync(this);
 
         //requesting for ACCESS_FINE_LOCATION
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -143,46 +152,6 @@ public class MainActivity extends AppCompatActivity
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, locationCallback, null);
     }
 
-
-
-    /*public void getDeviceLocation() {
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            locationPermissionGranted=false;
-        }
-        if(locationPermissionGranted) {
-            mFusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                mLastKnownLocation = location;
-                                //Log.i("MainActivity- OnSuccess", String.valueOf(mLastKnownLocation.getLatitude()));
-                            }
-                        }
-                    })
-            .addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    if(task.getResult() != null)
-                        mLastKnownLocation = task.getResult();
-                    //Log.i("MainActivity-OnComplete", String.valueOf(task.getResult().getLatitude()));
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.i("MainActivity-OnFaulure", e.getMessage());
-                }
-            });
-
-        }
-
-    }
-*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -226,13 +195,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.mapTypeNrm:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+            case R.id.mapTypeTerrain:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+            case R.id.mapTypeSatellite:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+            case R.id.mapTypeHybrid:
+                googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -245,7 +221,6 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(MainActivity.this, LocationActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_trasee) {
-            ///TODO aici trebuie sa trimitem traseele catre activitatea MapActivity
             intent = new Intent(MainActivity.this, TraseeActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
@@ -255,5 +230,18 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        DataBase db = DataBase.getInstance(this);
+        List<Locatie> listaLocatii = db.getLocatiiDao().getAll();
+        for(Locatie loc : listaLocatii) {
+            LatLng latLng = new LatLng(loc.getLatitudine(), loc.getLongitudine());
+            MarkerOptions marker = new MarkerOptions().position(latLng).title(loc.getDenumire());
+            googleMap.addMarker(marker);
+        }
+       googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.426783, 26.102335), 10f));
     }
 }

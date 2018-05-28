@@ -8,7 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.SimpleFormatter;
 
 import pdm.project.com.rentingbikes.Activities.MapActivity;
 import pdm.project.com.rentingbikes.Activities.RentActivity;
@@ -40,7 +48,11 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
                 view.getContext().startActivity(intent);
             }
         });
-        holder.tvTraseuDistanta.setText(trasee.get(position).toString());
+        holder.tvTraseuDistanta.setText(trasee.get(position).getDenumire());
+        String originalDate = String.valueOf(trasee.get(position).getDataStart());
+        String date = originalDate.substring(3,11);
+        String an = originalDate.substring(originalDate.length()-4, originalDate.length());
+        holder.tvDataStart.setText(date + an);
     }
 
     @Override
@@ -51,12 +63,14 @@ public class ListaTraseeAdaptor extends RecyclerView.Adapter<ListaTraseeAdaptor.
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView tvTraseuDistanta;
+        TextView tvDataStart;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardViewRand);
             tvTraseuDistanta = itemView.findViewById(R.id.tvTraseuDistanta);
+            tvDataStart = itemView.findViewById(R.id.tvTraseuStart);
         }
     }
 }

@@ -27,7 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.LocationActivity" />
+        <activity android:name=".Activities.LocationActivity"
+            android:label="Puncte de inchiriere"
+            android:parentActivityName=".Activities.MainActivity"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,15 +44,21 @@
 
         <activity
             android:name=".Activities.MapActivity"
-            android:label="@string/title_activity_map" />
+            android:label="Traseu" />
 
         <service
             android:name=".LocalizationService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".Activities.RentActivity" />
-        <activity android:name=".Activities.TraseeActivity"></activity>
+        <activity
+            android:name=".Activities.RentActivity"
+            android:label="Traseu Nou"/>
+
+        <activity
+            android:name=".Activities.TraseeActivity"
+            android:parentActivityName=".Activities.MainActivity"
+            android:label="Traseele mele"/>
     </application>
 
 </manifest>

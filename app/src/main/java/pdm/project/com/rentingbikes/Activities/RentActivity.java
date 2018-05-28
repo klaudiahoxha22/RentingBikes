@@ -1,19 +1,18 @@
 package pdm.project.com.rentingbikes.Activities;
 
 import android.Manifest;
-import android.arch.persistence.room.Database;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,13 +20,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +56,8 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final int COD_PERMISIUNE = 1;
     int id;
 
+    PolylineOptions options;
+
     BroadcastReceiver broadcastReceiver = null;
     boolean wasBackPressed = false;
 
@@ -76,14 +79,6 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                /*listaPuncte = intent.getParcelableArrayListExtra("listaPuncte");
-                DataBase dataBase = DataBase.getInstance(context);
-                long id = dataBase.getTraseeDao().insert(traseu);
-                for (int i = 0; i < listaPuncte.size(); i++) {
-                    Punct punctCurent = listaPuncte.get(i);
-                    punctCurent.setIdTraseu((int) id);
-                    dataBase.getPuncte().insertPunct(punctCurent);
-                }*/
                 Punct punct = (Punct) intent.getExtras().get("listaPuncte");
                 punct.setIdTraseu( id);
                 listaPuncte.add(punct);
@@ -102,6 +97,12 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, COD_PERMISIUNE);
         } else {
             StartServiciuLocalizare();
+            options = new PolylineOptions()
+                        .add(new LatLng(MainActivity.mLastKnownLocation.getLatitude(),
+                                MainActivity.mLastKnownLocation.getLongitude()))
+            .color(Color.GREEN)
+            .width(24)
+            .geodesic(true);
         }
     }
 
@@ -183,12 +184,16 @@ public class RentActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng bucuresti = new LatLng(44.426783, 26.102335);
         mGoogleMap.addMarker(new MarkerOptions().position(bucuresti).title("Bucuresti"));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bucuresti, 12.0f));
+
     }
 
 
     @Override
     public void onLocationChanged(Location location) {
-
+        options.add(new LatLng(location.getLatitude(), location.getLongitude()));
+        Log.i("RentAct-map", String.valueOf(location.getLatitude()));
+        Polyline line = mGoogleMap.addPolyline(options);
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10f));
     }
 
     @Override

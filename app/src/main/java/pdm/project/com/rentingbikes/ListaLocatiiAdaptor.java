@@ -16,12 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -61,19 +55,6 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         holder.tvDenumireLocatie.setText(locatii.get(position).getDenumire());
         holder.tvAdresa.setText(locatii.get(position).getAdresa());
 
-       /* if(MainActivity.mLastKnownLocation==null){
-            MainActivity.mFusedLocationClient.getLastLocation()
-                    .addOnCompleteListener(new OnCompleteListener<Location>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Location> task) {
-                            MainActivity.mLastKnownLocation = task.getResult();
-                            distance = DeviceLocation.fromLatLngToKm(MainActivity.mLastKnownLocation.getLatitude(), MainActivity.mLastKnownLocation.getLongitude(),
-
-                                    locatii.get(position).getLatitudine(), locatii.get(position).getLongitudine());
-                            holder.tvDistantaLocatie.setText(String.valueOf((int)distance)+ " km");
-                        }
-                    });
-        }*/
         distance = DeviceLocation.fromLatLngToKm(MainActivity.mLastKnownLocation.getLatitude(), MainActivity.mLastKnownLocation.getLongitude(),
 
                 locatii.get(position).getLatitudine(), locatii.get(position).getLongitudine());
@@ -91,7 +72,6 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
         TextView tvDistantaLocatie;
         TextView tvDenumireLocatie;
         TextView tvAdresa;
-        ImageView distImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,7 +79,6 @@ public class ListaLocatiiAdaptor extends RecyclerView.Adapter<ListaLocatiiAdapto
             tvDistantaLocatie = itemView.findViewById(R.id.tvDistantaLocatie);
             tvDenumireLocatie = itemView.findViewById(R.id.tvLocatie);
             tvAdresa = itemView.findViewById(R.id.tvAdresa);
-            //distImg = itemView.findViewById(R.id.distImg);
         }
     }
 }
