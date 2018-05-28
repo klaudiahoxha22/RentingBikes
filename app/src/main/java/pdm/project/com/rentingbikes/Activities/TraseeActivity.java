@@ -26,7 +26,10 @@ public class TraseeActivity extends AppCompatActivity {
 
         DataBase database = DataBase.getInstance(this);
         List<Traseu> listaTrasee = database.getTraseeDao().getAll();
+
         ListaTraseeAdaptor listaTraseeAdaptor = new ListaTraseeAdaptor(listaTrasee);
         recyclerViewTrasee.setAdapter(listaTraseeAdaptor);
+
+
     }
 }

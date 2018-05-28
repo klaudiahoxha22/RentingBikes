@@ -4,6 +4,8 @@ import android.app.LoaderManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -11,11 +13,16 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import pdm.project.com.rentingbikes.Activities.RentActivity;
+import pdm.project.com.rentingbikes.Clase.DeviceLocation;
+import pdm.project.com.rentingbikes.Clase.Punct;
 import pdm.project.com.rentingbikes.R;
 
 /**
@@ -24,8 +31,39 @@ import pdm.project.com.rentingbikes.R;
 public class WidgetActivity extends AppWidgetProvider {
 
     public static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+                                       int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_activity);
+        Uri uriLastTraseu = TraseeContentProvider.CONTENT_URI_TRASEE_LAST;
+
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor traseuCursor = contentResolver.query(uriLastTraseu, null, null, null, null);
+        ArrayList<Punct> listaPuncte = new ArrayList<Punct>();
+
+        if (traseuCursor != null) {
+            while (traseuCursor.moveToNext()) {
+                int id = traseuCursor.getInt(traseuCursor.getColumnIndex("_id"));
+
+                Uri uriPuncte = ContentUris.withAppendedId(TraseeContentProvider.CONTENT_URI_PUNCTE, id);
+                Cursor cursorPuncte = contentResolver.query(uriPuncte, null, null, null, null);
+                if (cursorPuncte != null)
+                    while (cursorPuncte.moveToNext()) {
+                        double lat = cursorPuncte.getDouble(cursorPuncte.getColumnIndex("Latitudine"));
+                        double longitudine = cursorPuncte.getDouble(cursorPuncte.getColumnIndex("Longitudine"));
+
+                        listaPuncte.add(new Punct(0, lat, longitudine, id));
+                        Log.i("PROIECT", lat + "");
+                    }
+
+                double distanta = 0;
+                for(int i=1;i<listaPuncte.size();i++){
+                    distanta+= DeviceLocation.fromLatLngToKm(listaPuncte.get(i).getLatitudine(), listaPuncte.get(i).getLongitudine(),
+                            listaPuncte.get(i-1).getLatitudine(), listaPuncte.get(i-1).getLongitudine());
+                }
+            }
+        }
+
+
         if(RentActivity.distanta==-1||RentActivity.calculareCalorii()==-1){
 
             views.setTextViewText(R.id.distantaParcursa,"0 km");
@@ -47,29 +85,7 @@ public class WidgetActivity extends AppWidgetProvider {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
-
-        /*LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks=
-                new LoaderManager.LoaderCallbacks<Cursor>() {
-                    @Override
-                    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-                        if(i ==2){
-                            return new CursorLoader(context,MyContentProvider.URI_TRASEE,null,null,null,null);
-                        }
-                        return null;
-                    }
-
-                    @Override
-                    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
-                    }
-
-                    @Override
-                    public void onLoaderReset(Loader<Cursor> loader) {
-
-                    }
-                };*/
     }
-
 
 
     @Override
